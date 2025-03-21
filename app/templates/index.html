@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Xử lý hóa đơn thành PDF{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title mb-0">Xử lý hóa đơn</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">Tải lên ảnh hóa đơn và chuyển đổi thành PDF chất lượng cao</p>
+                
+                <form method="post" action="{{ url_for('main.upload_file') }}" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="invoice_image" class="form-label">Chọn ảnh hóa đơn:</label>
+                        <input type="file" class="form-control" id="invoice_image" name="invoice_image" accept=".jpg,.jpeg,.png" required>
+                        <div class="form-text">Hỗ trợ các định dạng: JPG, JPEG, PNG. Kích thước tối đa: 16MB.</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="ocr_enabled" name="ocr_enabled">
+                            <label class="form-check-label" for="ocr_enabled">
+                                Trích xuất thông tin hóa đơn bằng OCR
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Xử lý hóa đơn</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">
+                <h3 class="card-title mb-0">Hướng dẫn sử dụng</h3>
+            </div>
+            <div class="card-body">
+                <ol class="mb-0">
+                    <li>Chọn ảnh hóa đơn từ thiết bị của bạn</li>
+                    <li>Tùy chọn bật tính năng OCR để trích xuất thông tin từ hóa đơn</li>
+                    <li>Nhấn "Xử lý hóa đơn" để bắt đầu</li>
+                    <li>Hệ thống sẽ tự động xử lý ảnh và chuyển đổi thành PDF chất lượng cao</li>
+                    <li>Bạn có thể xem, tải về hoặc chia sẻ file PDF kết quả</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Hiển thị tên file khi người dùng chọn
+    document.getElementById('invoice_image').addEventListener('change', function() {
+        const fileName = this.files[0]?.name;
+        if (fileName) {
+            // Hiển thị tên file đã chọn
+            const fileLabel = document.querySelector('label[for="invoice_image"]');
+            fileLabel.textContent = `Ảnh đã chọn: ${fileName}`;
+        }
+    });
+</script>
+{% endblock %}
